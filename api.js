@@ -6,3 +6,6 @@ const articlesAPI = axios.create({
 export const fetchArticles = (articleID = "") => {
 	return articlesAPI.get(`articles/${articleID}`);
 };
+export const patchArticleVotes = (id, vote) => {
+	return articlesAPI.patch(`articles/${id}`, { inc_votes: vote });
+};

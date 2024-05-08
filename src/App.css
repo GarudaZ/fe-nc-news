@@ -24,7 +24,7 @@ img {
 	border-radius: 20px;
 }
 
-.card:hover {
+.highlight:hover {
 	background-color: #303030;
 }
 
@@ -60,4 +60,14 @@ a:hover {
 }
 .comment {
 	background-color: #333333;
+}
+
+.voting {
+	display: flex;
+	flex-direction: row;
+	flex-flow: wrap;
+	gap: 8px;
+}
+button > * {
+	pointer-events: none;
 }

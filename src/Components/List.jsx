@@ -26,7 +26,9 @@ const List = ({ articleId }) => {
 
 	if (articles.article) {
 		const fullEntry = true;
-		return <Card item={articles.article} fullEntry={fullEntry} />;
+		return (
+			<Card item={articles.article} fullEntry={fullEntry} id={articleId} />
+		);
 	}
 
 	if (articles.comments) {
@@ -36,7 +38,11 @@ const List = ({ articleId }) => {
 				{articles.comments.map((comment) => {
 					return (
 						<li key={comment.comment_id} style={{ cursor: "default" }}>
-							<Card item={comment} comments={comments} />
+							<Card
+								item={comment}
+								comments={comments}
+								id={comment.article_id}
+							/>
 						</li>
 					);
 				})}
@@ -59,7 +65,7 @@ const List = ({ articleId }) => {
 							handleClick(articleDetails.article_id, e);
 						}}
 					>
-						<Card item={articleDetails} />
+						<Card item={articleDetails} id={articleDetails.article_id} />
 					</li>
 				);
 			})}
