@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import { fetchArticles } from "../../api";

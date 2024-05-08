@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 const Card = ({ article, fullEntry }) => {
 	return (
-		<div className="card">
+		<div className="card" style={fullEntry ? { pointerEvents: "none" } : null}>
 			<h3>nc/{article.topic}</h3>
 			{fullEntry && <p>{new Date(article.created_at).toDateString()}</p>}
 			<h2>{article.title}</h2>
