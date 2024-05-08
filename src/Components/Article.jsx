@@ -2,10 +2,12 @@ import List from "./List";
 
 const Article = () => {
 	const articleId = window.location.pathname.split("/").pop();
+	const comments = articleId + "/comments";
+
 	return (
 		<main>
-			<div>Article</div>
 			<List articleId={articleId} />
+			<List articleId={comments} />
 		</main>
 	);
 };
