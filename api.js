@@ -10,7 +10,6 @@ export const patchArticleVotes = (id, vote) => {
 	return articlesAPI.patch(`articles/${id}`, { inc_votes: vote });
 };
 export const postComment = (id, user, body) => {
-	// console.log(id, user, body);
 	return articlesAPI
 		.post(`articles/${id}/comments`, {
 			username: user,
@@ -19,4 +18,7 @@ export const postComment = (id, user, body) => {
 		.catch((err) => {
 			console.log(err);
 		});
+};
+export const deleteComment = (commentId) => {
+	return articlesAPI.delete(`comments/${commentId}`);
 };

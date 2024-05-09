@@ -1,13 +1,32 @@
 import VotesAndComments from "./VotesAndComments";
+import { useState, useContext } from "react";
+import { UserContext } from "./Contexts/User";
+import { deleteComment } from "../../api";
 
 /* eslint-disable react/prop-types */
 const Card = ({ item, fullEntry, comments, id, isLoading, setNewComment }) => {
+	const { user } = useContext(UserContext);
+	const [isDeleting, setIsDeleting] = useState(false);
+	const handleDelComment = (e) => {
+		e.preventDefault();
+		setIsDeleting(true);
+		deleteComment(item.comment_id).then(() => {
+			setIsDeleting(false);
+			setNewComment(true);
+		});
+	};
+
 	if (comments) {
 		return (
 			<div className="card comment">
 				<h3>{item.author}</h3>
 				<p>{item.body}</p>
 				<p>Votes: {item.votes}</p>
+				{item.author === user ? (
+					<button disabled={isDeleting} onClick={handleDelComment}>
+						delete
+					</button>
+				) : null}
 			</div>
 		);
 	}

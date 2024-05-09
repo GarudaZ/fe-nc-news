@@ -52,6 +52,9 @@ const List = ({ articleId, newComment, setNewComment }) => {
 								item={comment}
 								comments={comments}
 								id={comment.article_id}
+								isLoading={isLoading}
+								setIsLoading={setIsLoading}
+								setNewComment={setNewComment}
 							/>
 						</li>
 					);
