@@ -3,7 +3,7 @@ import { UserContext } from "./Contexts/User";
 import { useContext } from "react";
 
 const Nav = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user } = useContext(UserContext);
 
 	return (
 		<nav>

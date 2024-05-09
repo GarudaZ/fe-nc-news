@@ -31,7 +31,6 @@ const VotesAndComments = ({
 
 		const comment = e.target;
 		const commentData = new FormData(comment);
-
 		const formJson = Object.fromEntries(commentData.entries());
 		const commentBody = formJson.inputBody;
 
