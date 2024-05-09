@@ -1,11 +1,20 @@
-import { useState } from "react";
-import { patchArticleVotes } from "../../api";
-
+/* eslint-disable react/prop-types */
+import { useContext, useState } from "react";
+import { patchArticleVotes, postComment } from "../../api";
+import { UserContext } from "./Contexts/User";
 // eslint-disable-next-line react/prop-types
-const VotesAndComments = ({ votes, comments, id }) => {
+const VotesAndComments = ({
+	votes,
+	comments,
+	id,
+	fullEntry,
+	isLoading,
+	setNewComment,
+}) => {
 	const [voteCount, setVoteCount] = useState(votes);
 	const [voteChange, setVoteChange] = useState(0);
 	const [err, setErr] = useState(null);
+	const { user } = useContext(UserContext);
 
 	const handleVote = (vote) => {
 		setVoteCount(voteCount + vote);
@@ -15,6 +24,25 @@ const VotesAndComments = ({ votes, comments, id }) => {
 			setVoteChange(0);
 			setErr("An error occurred, please try again");
 		});
+	};
+
+	const handleNewComment = (e) => {
+		e.preventDefault();
+
+		const comment = e.target;
+		const commentData = new FormData(comment);
+
+		const formJson = Object.fromEntries(commentData.entries());
+		const commentBody = formJson.inputBody;
+
+		postComment(id, user, commentBody)
+			.then(() => {
+				e.target.elements.inputBody.value = "";
+				setNewComment(true);
+			})
+			.catch(() => {
+				setErr("An error occurred, please try again");
+			});
 	};
 
 	return (
@@ -40,6 +68,22 @@ const VotesAndComments = ({ votes, comments, id }) => {
 			</button>
 			{err ? <p>{err}</p> : null}
 			<div>Comments: {comments}</div>
+			{fullEntry ? (
+				<form method="post" onSubmit={handleNewComment}>
+					<label htmlFor="commentForm">Add Comment</label>
+					<input
+						id="commentForm"
+						type="text"
+						placeholder="Enter Comment"
+						name="inputBody"
+						disabled={isLoading}
+						required
+					></input>
+					<button type="submit" disabled={isLoading}>
+						Add
+					</button>
+				</form>
+			) : null}
 		</section>
 	);
 };

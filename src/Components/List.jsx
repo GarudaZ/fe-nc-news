@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchArticles } from "../../api";
 import { useNavigate } from "react-router-dom";
 
-const List = ({ articleId }) => {
+const List = ({ articleId, newComment, setNewComment }) => {
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
@@ -14,11 +14,15 @@ const List = ({ articleId }) => {
 			.then((response) => {
 				setArticles(response.data);
 				setIsLoading(false);
+
+				if (newComment) {
+					setNewComment(false);
+				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [articleId, newComment]);
 
 	if (isLoading) {
 		return <h2>Loading...</h2>;
@@ -27,7 +31,13 @@ const List = ({ articleId }) => {
 	if (articles.article) {
 		const fullEntry = true;
 		return (
-			<Card item={articles.article} fullEntry={fullEntry} id={articleId} />
+			<Card
+				item={articles.article}
+				fullEntry={fullEntry}
+				id={articleId}
+				isLoading={isLoading}
+				setNewComment={setNewComment}
+			/>
 		);
 	}
 

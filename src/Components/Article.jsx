@@ -1,13 +1,23 @@
 import List from "./List";
+import { useState } from "react";
 
 const Article = () => {
 	const articleId = window.location.pathname.split("/").pop();
 	const comments = articleId + "/comments";
+	const [newComment, setNewComment] = useState(false);
 
 	return (
 		<main>
-			<List articleId={articleId} />
-			<List articleId={comments} />
+			<List
+				articleId={articleId}
+				newComment={newComment}
+				setNewComment={setNewComment}
+			/>
+			<List
+				articleId={comments}
+				newComment={newComment}
+				setNewComment={setNewComment}
+			/>
 		</main>
 	);
 };
