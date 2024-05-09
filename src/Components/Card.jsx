@@ -1,15 +1,13 @@
 import VotesAndComments from "./VotesAndComments";
 
 /* eslint-disable react/prop-types */
-const Card = ({ item, fullEntry, comments, id }) => {
+const Card = ({ item, fullEntry, comments, id, isLoading, setNewComment }) => {
 	if (comments) {
 		return (
 			<div className="card comment">
 				<h3>{item.author}</h3>
 				<p>{item.body}</p>
-				<p>
-					Votes: {item.votes} Comments:{item.comment_count}
-				</p>
+				<p>Votes: {item.votes}</p>
 			</div>
 		);
 	}
@@ -25,6 +23,9 @@ const Card = ({ item, fullEntry, comments, id }) => {
 				votes={item.votes}
 				comments={item.comment_count}
 				id={id}
+				fullEntry={fullEntry}
+				isLoading={isLoading}
+				setNewComment={setNewComment}
 			/>
 		</div>
 	);

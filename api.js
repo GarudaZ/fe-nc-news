@@ -9,3 +9,14 @@ export const fetchArticles = (articleID = "") => {
 export const patchArticleVotes = (id, vote) => {
 	return articlesAPI.patch(`articles/${id}`, { inc_votes: vote });
 };
+export const postComment = (id, user, body) => {
+	// console.log(id, user, body);
+	return articlesAPI
+		.post(`articles/${id}/comments`, {
+			username: user,
+			body: body,
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
