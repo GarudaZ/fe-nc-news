@@ -3,7 +3,6 @@ import { useState, useContext } from "react";
 import { UserContext } from "./Contexts/User";
 import { deleteComment } from "../../api";
 
-/* eslint-disable react/prop-types */
 const Card = ({
 	item,
 	fullEntry,

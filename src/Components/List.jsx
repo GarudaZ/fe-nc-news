@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Card from "./Card";
 import Filter from "./Filter";
 import ErrorMsg from "./ErrorMsg";

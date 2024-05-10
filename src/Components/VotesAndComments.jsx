@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
 import { patchArticleVotes, postComment } from "../../api";
 import { UserContext } from "./Contexts/User";
-// eslint-disable-next-line react/prop-types
+
 const VotesAndComments = ({
 	votes,
 	comments,
