@@ -7,9 +7,8 @@ const Nav = () => {
 
 	return (
 		<nav>
-			<div>
-				<Link to=".">Home</Link>
-			</div>
+			<Link to=".">Home</Link>
+			<Link to="./topics">Topics</Link>
 			<div>User: {user}</div>
 		</nav>
 	);

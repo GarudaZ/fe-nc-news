@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import Home from "./Components/Home";
 import Article from "./Components/Article";
 import Nav from "./Components/Nav";
+import Topics from "./Components/Topics";
 import { useState } from "react";
 import { UserProvider } from "./Components/Contexts/User";
 
@@ -19,6 +20,7 @@ function App() {
 					<Route path="/" element={<Home />} />
 					<Route path="/articles" element={<Home />} />
 					<Route path="/articles/:article_id" element={<Article />} />
+					<Route path="/topics" element={<Topics />} />
 				</Routes>
 			</UserProvider>
 		</>

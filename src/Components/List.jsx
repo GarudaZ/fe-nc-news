@@ -1,31 +1,80 @@
 /* eslint-disable react/prop-types */
 import Card from "./Card";
 import { useEffect, useState } from "react";
-import { fetchArticles } from "../../api";
-import { useNavigate } from "react-router-dom";
+import { fetchArticles, fetchTopics } from "../../api";
+import {
+	createSearchParams,
+	useNavigate,
+	useSearchParams,
+} from "react-router-dom";
 
-const List = ({ articleId, newComment, setNewComment }) => {
+const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [topics, setTopics] = useState([]);
 	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+	const topic = searchParams.get("topic");
 
 	useEffect(() => {
-		fetchArticles(articleId)
-			.then((response) => {
-				setArticles(response.data);
-				setIsLoading(false);
+		if (getTopics) {
+			fetchTopics()
+				.then((response) => {
+					setTopics(response.data);
+					setIsLoading(false);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			fetchArticles(articleId, topic)
+				.then((response) => {
+					setArticles(response.data);
+					setIsLoading(false);
 
-				if (newComment) {
-					setNewComment(false);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+					if (newComment) {
+						setNewComment(false);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 	}, [articleId, newComment]);
+
+	function handleClick(id, e) {
+		e.preventDefault();
+		navigate("/articles/" + id);
+	}
+	function handleTopicClick(topic, e) {
+		e.preventDefault();
+		navigate({
+			pathname: "/articles/",
+			search: createSearchParams({ topic: topic }).toString(),
+		});
+	}
 
 	if (isLoading) {
 		return <h2>Loading...</h2>;
+	}
+
+	if (getTopics) {
+		return (
+			<ul>
+				{topics.map((topic) => {
+					return (
+						<li
+							key={topic.slug}
+							onClick={(e) => {
+								handleTopicClick(topic.slug, e);
+							}}
+						>
+							<Card getTopics={getTopics} item={topic} />
+						</li>
+					);
+				})}
+			</ul>
+		);
 	}
 
 	if (articles.article) {
@@ -61,11 +110,6 @@ const List = ({ articleId, newComment, setNewComment }) => {
 				})}
 			</ul>
 		);
-	}
-
-	function handleClick(id, e) {
-		e.preventDefault();
-		navigate("/articles/" + id);
 	}
 
 	return (
