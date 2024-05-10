@@ -4,9 +4,18 @@ import { UserContext } from "./Contexts/User";
 import { deleteComment } from "../../api";
 
 /* eslint-disable react/prop-types */
-const Card = ({ item, fullEntry, comments, id, isLoading, setNewComment }) => {
+const Card = ({
+	item,
+	fullEntry,
+	comments,
+	id,
+	isLoading,
+	setNewComment,
+	getTopics,
+}) => {
 	const { user } = useContext(UserContext);
 	const [isDeleting, setIsDeleting] = useState(false);
+
 	const handleDelComment = (e) => {
 		e.preventDefault();
 		setIsDeleting(true);
@@ -15,6 +24,15 @@ const Card = ({ item, fullEntry, comments, id, isLoading, setNewComment }) => {
 			setNewComment(true);
 		});
 	};
+
+	if (getTopics) {
+		return (
+			<div className="card">
+				<h3>{item.slug}</h3>
+				<p>{item.description}</p>
+			</div>
+		);
+	}
 
 	if (comments) {
 		return (

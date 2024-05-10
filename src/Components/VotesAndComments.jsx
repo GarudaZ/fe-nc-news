@@ -34,9 +34,9 @@ const VotesAndComments = ({
 		const formJson = Object.fromEntries(commentData.entries());
 		const commentBody = formJson.inputBody;
 
+		e.target.elements.inputBody.value = "";
 		postComment(id, user, commentBody)
 			.then(() => {
-				e.target.elements.inputBody.value = "";
 				setNewComment(true);
 			})
 			.catch(() => {
