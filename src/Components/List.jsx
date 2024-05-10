@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import Card from "./Card";
+import Filter from "./Filter";
 import { useEffect, useState } from "react";
 import { fetchArticles, fetchTopics } from "../../api";
 import {
@@ -12,11 +13,30 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [topics, setTopics] = useState([]);
+
+	const [sortBy, setSortBy] = useState("");
+	const [order, setOrder] = useState("");
+
 	const navigate = useNavigate();
-	const [searchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const topic = searchParams.get("topic");
 
+	function handleUrl() {
+		const params = {};
+		{
+			topic ? (params.topic = topic) : null;
+		}
+		{
+			sortBy ? (params.sort_by = sortBy) : null;
+		}
+		{
+			order ? (params.order = order) : null;
+		}
+		setSearchParams(params);
+	}
+
 	useEffect(() => {
+		const urlSearchParams = window.location.search;
 		if (getTopics) {
 			fetchTopics()
 				.then((response) => {
@@ -27,11 +47,10 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 					console.log(err);
 				});
 		} else {
-			fetchArticles(articleId, topic)
+			fetchArticles(articleId, urlSearchParams)
 				.then((response) => {
 					setArticles(response.data);
 					setIsLoading(false);
-
 					if (newComment) {
 						setNewComment(false);
 					}
@@ -40,7 +59,7 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 					console.log(err);
 				});
 		}
-	}, [articleId, newComment]);
+	}, [articleId, newComment, searchParams]);
 
 	function handleClick(id, e) {
 		e.preventDefault();
@@ -111,9 +130,9 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 			</ul>
 		);
 	}
-
 	return (
 		<ul className="list">
+			<Filter setSortBy={setSortBy} setOrder={setOrder} handleUrl={handleUrl} />
 			{articles.map((articleDetails) => {
 				return (
 					<li
