@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import Card from "./Card";
 import Filter from "./Filter";
+import ErrorMsg from "./ErrorMsg";
 import { useEffect, useState } from "react";
 import { fetchArticles, fetchTopics } from "../../api";
 import {
@@ -13,6 +14,7 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [topics, setTopics] = useState([]);
+	const [error, setError] = useState(null);
 
 	const [sortBy, setSortBy] = useState("");
 	const [order, setOrder] = useState("");
@@ -20,7 +22,6 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const topic = searchParams.get("topic");
-
 	function handleUrl() {
 		const params = {};
 		{
@@ -49,6 +50,7 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 		} else {
 			fetchArticles(articleId, urlSearchParams)
 				.then((response) => {
+					setError(null);
 					setArticles(response.data);
 					setIsLoading(false);
 					if (newComment) {
@@ -56,6 +58,7 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 					}
 				})
 				.catch((err) => {
+					setError({ err });
 					console.log(err);
 				});
 		}
@@ -72,8 +75,11 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 			search: createSearchParams({ topic: topic }).toString(),
 		});
 	}
+	if (error && /[a-zA-Z]/.test(articleId)) {
+		return <ErrorMsg message={error.err.response.data.message} />;
+	}
 
-	if (isLoading) {
+	if (isLoading && !error) {
 		return <h2>Loading...</h2>;
 	}
 
