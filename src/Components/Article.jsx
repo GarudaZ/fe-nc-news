@@ -8,7 +8,6 @@ const Article = () => {
 
 	return (
 		<main>
-			<h2>Article</h2>
 			<List
 				articleId={articleId}
 				newComment={newComment}

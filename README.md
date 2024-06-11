@@ -16,6 +16,7 @@ The backend repo can be found here:
 ## Requirements
 
 Node version 21.6.2
+The app plan is contained in an excalidraw file (created using the excalidraw vscode plugin).
 
 ## Running Locally
 

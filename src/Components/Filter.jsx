@@ -12,8 +12,8 @@ const Filter = ({ setSortBy, setOrder, handleUrl }) => {
 	}
 
 	return (
-		<div>
-			Filter
+		<div className="filter">
+			<p style={{ display: "inline" }}>Filter: </p>
 			<select onChange={handleSortSelect}>
 				<option value="">Sort</option>
 				<option value="comment_count">Comments</option>
