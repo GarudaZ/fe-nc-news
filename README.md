@@ -7,7 +7,7 @@ The home page displays a range of recent articles which can be filtered using th
 ## Hosted Version
 
 You can find the hosted version here:
-https://ncnewsnow.netlify.app/articles/?topic=coding
+https://ncnewsnow.netlify.app
 
 ## Backend Repo
 
