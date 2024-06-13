@@ -136,7 +136,7 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 		);
 	}
 	return (
-		<ul className="list">
+		<ul className="list articles">
 			<Filter setSortBy={setSortBy} setOrder={setOrder} handleUrl={handleUrl} />
 			{articles.map((articleDetails) => {
 				return (

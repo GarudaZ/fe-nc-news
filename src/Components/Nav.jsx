@@ -9,20 +9,30 @@ const Nav = () => {
 	return (
 		<nav>
 			<Link
-				className={location.pathname === "/" ? "navBox current" : "navBox"}
+				className={location.pathname === "/" ? "nav-box current" : "nav-box"}
 				to="."
 			>
-				Home
+				<p>Home</p>
 			</Link>
 			<Link
 				className={
-					location.pathname === "/topics" ? "navBox current" : "navBox"
+					location.pathname === "/topics" ? "nav-box current" : "nav-box"
 				}
 				to="./topics"
 			>
-				Topics
+				<p>Topics</p>
 			</Link>
-			<div className="navBox disable">User: {user}</div>
+			<Link
+				className={
+					location.pathname === "/user" ? "nav-box current" : "nav-box"
+				}
+				to="./user"
+			>
+				<p className="userLabel" alt="link to userpage">
+					{user.username}
+				</p>
+				<img className="avatar" src={user.avatar_url} />
+			</Link>
 		</nav>
 	);
 };

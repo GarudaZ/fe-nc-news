@@ -8,16 +8,18 @@ const Article = () => {
 
 	return (
 		<main>
-			<List
-				articleId={articleId}
-				newComment={newComment}
-				setNewComment={setNewComment}
-			/>
-			<List
-				articleId={comments}
-				newComment={newComment}
-				setNewComment={setNewComment}
-			/>
+			<div className="fullArticle">
+				<List
+					articleId={articleId}
+					newComment={newComment}
+					setNewComment={setNewComment}
+				/>
+				<List
+					articleId={comments}
+					newComment={newComment}
+					setNewComment={setNewComment}
+				/>
+			</div>
 		</main>
 	);
 };

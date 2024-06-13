@@ -24,5 +24,10 @@ export const postComment = (id, user, body) => {
 		});
 };
 export const deleteComment = (commentId) => {
-	return articlesAPI.delete(`comments/${commentId}`);
+	return articlesAPI.delete(`comments/${commentId}`).catch((err) => {
+		console.log(err);
+	});
+};
+export const fetchUser = (userId) => {
+	return articlesAPI.get(`users/${userId}`);
 };

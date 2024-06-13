@@ -12,6 +12,7 @@ const VotesAndComments = ({
 }) => {
 	const [voteCount, setVoteCount] = useState(votes);
 	const [voteChange, setVoteChange] = useState(0);
+	const [isPosting, setIsPosting] = useState(false);
 	const [err, setErr] = useState(null);
 	const { user } = useContext(UserContext);
 
@@ -27,52 +28,56 @@ const VotesAndComments = ({
 
 	const handleNewComment = (e) => {
 		e.preventDefault();
+		setIsPosting(true);
 
 		const comment = e.target;
 		const commentData = new FormData(comment);
 		const formJson = Object.fromEntries(commentData.entries());
 		const commentBody = formJson.inputBody;
 
-		e.target.elements.inputBody.value = "";
-		postComment(id, user, commentBody)
+		postComment(id, user.username, commentBody)
 			.then(() => {
+				e.target.elements.inputBody.value = "";
 				setNewComment(true);
+				setIsPosting(false);
 			})
 			.catch(() => {
 				setErr("An error occurred, please try again");
+				setIsPosting(false);
 			});
 	};
 
 	return (
-		<section className="voting">
-			<div>Votes: {voteCount}</div>
-			<button
-				disabled={voteChange > 0}
-				onClick={(e) => {
-					e.stopPropagation();
-					handleVote(1);
-				}}
-			>
-				+
-			</button>
-			<button
-				disabled={voteChange < 0}
-				onClick={(e) => {
-					e.stopPropagation();
-					handleVote(-1);
-				}}
-			>
-				-
-			</button>
-			{err ? <p>{err}</p> : null}
-			<div>Comments: {comments}</div>
+		<section className="votes-and-comments">
+			<div className="voting">
+				Votes: {voteCount}
+				<button
+					disabled={voteChange > 0}
+					onClick={(e) => {
+						e.stopPropagation();
+						handleVote(1);
+					}}
+				>
+					+
+				</button>
+				<button
+					disabled={voteChange < 0}
+					onClick={(e) => {
+						e.stopPropagation();
+						handleVote(-1);
+					}}
+				>
+					-
+				</button>
+				{err ? <p>{err}</p> : null}
+			</div>
+			<p>Comments:</p> <div className="comment-count">{comments}</div>
 			{fullEntry ? (
 				<form method="post" onSubmit={handleNewComment}>
-					<label htmlFor="commentForm">Add Comment</label>
 					<input
 						id="commentForm"
 						type="text"
-						placeholder="Enter Comment"
+						placeholder="Enter a comment"
 						name="inputBody"
 						disabled={isLoading}
 						required
@@ -82,6 +87,7 @@ const VotesAndComments = ({
 					</button>
 				</form>
 			) : null}
+			{isPosting ? <p className="postingMsg">Posting...</p> : null}
 		</section>
 	);
 };

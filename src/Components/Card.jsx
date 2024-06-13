@@ -39,10 +39,13 @@ const Card = ({
 				<h3>{item.author}</h3>
 				<p>{item.body}</p>
 				<p>Votes: {item.votes}</p>
-				{item.author === user ? (
-					<button disabled={isDeleting} onClick={handleDelComment}>
-						delete
-					</button>
+				{item.author === user.username ? (
+					<div className="delete-btn">
+						<button disabled={isDeleting} onClick={handleDelComment}>
+							delete
+						</button>
+						{isDeleting ? <p className="postingMsg">Deleting...</p> : null}
+					</div>
 				) : null}
 			</div>
 		);

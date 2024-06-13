@@ -17,7 +17,7 @@ img {
 
 .logo {
 	width: 45vw;
-	min-width: 300px;
+	min-width: 200px;
 	max-width: 600px;
 	height: 25vw;
 	max-height: 250px;
@@ -72,14 +72,43 @@ a {
 }
 
 .comment {
-	background-color: #333333;
+	background-color: #444444;
 }
 
-.voting {
+.votes-and-comments {
 	display: flex;
 	flex-direction: row;
 	flex-flow: wrap;
 	gap: 8px;
+	align-content: center;
+	align-items: center;
+	background-color: #444444;
+	border-radius: 10px;
+	padding: 8px;
+}
+.voting {
+	background-color: #303030;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.comment-count {
+	color: #ff5757;
+}
+
+.postingMsg {
+	/* float: right; */
+}
+
+input {
+	width: auto;
+	height: 24px;
+	margin: 5px;
+	border-radius: 5px;
+
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	font-size: medium;
 }
 
 button {
@@ -98,16 +127,19 @@ nav {
 	justify-content: center;
 	margin-bottom: 10px;
 }
-.navBox {
+.nav-box {
+	display: flex;
 	color: #ffffff;
 	background-color: #303030;
 	border: white;
-	padding: 2%;
+	padding: 0.5% 1.5%;
 	border-width: 3px;
 	border-style: solid;
 	border-radius: 7px;
+	justify-content: center;
+	align-items: center;
 }
-.navBox:hover {
+.nav-box:hover {
 	color: #acadbd;
 	background-color: #444444;
 }
@@ -129,4 +161,23 @@ select {
 	height: 10%;
 	width: 20%;
 	font-size: large;
+}
+.avatar {
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	margin: 5px 5px;
+}
+.home {
+	height: auto;
+	width: auto;
+}
+.fullArticle {
+	background-color: #303030;
+	border-radius: 20px;
+	padding: 10px;
+}
+.delete-btn {
+	display: flex;
+	flex-direction: row;
 }

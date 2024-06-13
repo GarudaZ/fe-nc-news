@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import Home from "./Components/Home";
 import Article from "./Components/Article";
 import Nav from "./Components/Nav";
+import User from "./Components/User"
 import Topics from "./Components/Topics";
 import ErrorPage from "./Components/ErrorPage";
 import { useState } from "react";
@@ -22,6 +23,7 @@ function App() {
 					<Route path="/articles" element={<Home />} />
 					<Route path="/articles/:article_id" element={<Article />} />
 					<Route path="/topics" element={<Topics />} />
+					<Route path="/user" element={<User />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</UserProvider>
