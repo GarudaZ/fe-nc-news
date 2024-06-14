@@ -21,6 +21,7 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const topic = searchParams.get("topic");
+
 	function handleUrl() {
 		const params = {};
 		{
@@ -44,7 +45,8 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 					setIsLoading(false);
 				})
 				.catch((err) => {
-					console.log(err);
+					setError(err.message);
+					setIsLoading(false);
 				});
 		} else {
 			fetchArticles(articleId, urlSearchParams)
@@ -57,8 +59,8 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 					}
 				})
 				.catch((err) => {
-					setError({ err });
-					console.log(err);
+					setError(err.message);
+					setIsLoading(false);
 				});
 		}
 	}, [articleId, newComment, searchParams]);
@@ -74,8 +76,9 @@ const List = ({ articleId, newComment, setNewComment, getTopics }) => {
 			search: createSearchParams({ topic: topic }).toString(),
 		});
 	}
-	if (error && /[a-zA-Z]/.test(articleId)) {
-		return <ErrorMsg message={error.err.response.data.message} />;
+
+	if (error) {
+		return <ErrorMsg message={error} />;
 	}
 
 	if (isLoading && !error) {

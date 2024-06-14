@@ -13,15 +13,21 @@ const Card = ({
 	getTopics,
 }) => {
 	const { user } = useContext(UserContext);
+	const [errDeleting, setErrDeleting] = useState(null);
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const handleDelComment = (e) => {
 		e.preventDefault();
 		setIsDeleting(true);
-		deleteComment(item.comment_id).then(() => {
-			setIsDeleting(false);
-			setNewComment(true);
-		});
+		deleteComment(item.comment_id)
+			.then(() => {
+				setIsDeleting(false);
+				setNewComment(true);
+			})
+			.catch((err) => {
+				setErrDeleting(err.message);
+				setIsDeleting(false);
+			});
 	};
 
 	if (getTopics) {
@@ -45,6 +51,7 @@ const Card = ({
 							delete
 						</button>
 						{isDeleting ? <p className="postingMsg">Deleting...</p> : null}
+						{errDeleting ? <p>{errDeleting}</p> : null}
 					</div>
 				) : null}
 			</div>

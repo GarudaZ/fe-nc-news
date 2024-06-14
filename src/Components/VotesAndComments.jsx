@@ -17,17 +17,19 @@ const VotesAndComments = ({
 	const { user } = useContext(UserContext);
 
 	const handleVote = (vote) => {
+		setErr(null);
 		setVoteCount(voteCount + vote);
 		setVoteChange(voteChange + vote);
 		patchArticleVotes(id, vote).catch(() => {
 			setVoteCount((voteCount) => voteCount - vote);
 			setVoteChange(0);
-			setErr("An error occurred, please try again");
+			setErr("An error occurred, please try voting gain");
 		});
 	};
 
 	const handleNewComment = (e) => {
 		e.preventDefault();
+		setErr(null);
 		setIsPosting(true);
 
 		const comment = e.target;
@@ -42,7 +44,7 @@ const VotesAndComments = ({
 				setIsPosting(false);
 			})
 			.catch(() => {
-				setErr("An error occurred, please try again");
+				setErr("An error occurred, please try  posting again");
 				setIsPosting(false);
 			});
 	};
@@ -69,7 +71,6 @@ const VotesAndComments = ({
 				>
 					-
 				</button>
-				{err ? <p>{err}</p> : null}
 			</div>
 			<p>Comments:</p> <div className="comment-count">{comments}</div>
 			{fullEntry ? (
@@ -87,6 +88,7 @@ const VotesAndComments = ({
 					</button>
 				</form>
 			) : null}
+			{err ? <p>{err}</p> : null}
 			{isPosting ? <p className="postingMsg">Posting...</p> : null}
 		</section>
 	);
